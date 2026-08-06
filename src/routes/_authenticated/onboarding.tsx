@@ -88,13 +88,19 @@ function Onboarding() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!type) return toast.error("Choose an organization type");
+    if (!type) {
+      toast.error("Choose an organization type");
+      return;
+    }
     const parsed = schema.safeParse({
       ...form,
       latitude: form.latitude ? Number(form.latitude) : null,
       longitude: form.longitude ? Number(form.longitude) : null,
     });
-    if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
+      return;
+    }
 
     setBusy(true);
     try {
