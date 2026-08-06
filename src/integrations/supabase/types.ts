@@ -14,16 +14,915 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ai_actions: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          organization_id: string | null
+          payload: Json
+          result: Json | null
+          status: Database["public"]["Enums"]["ai_action_status"]
+          summary: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          organization_id?: string | null
+          payload?: Json
+          result?: Json | null
+          status?: Database["public"]["Enums"]["ai_action_status"]
+          summary: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          organization_id?: string | null
+          payload?: Json
+          result?: Json | null
+          status?: Database["public"]["Enums"]["ai_action_status"]
+          summary?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_actions_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          entity: string
+          entity_id: string | null
+          id: string
+          meta: Json
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          entity: string
+          entity_id?: string | null
+          id?: string
+          meta?: Json
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          entity?: string
+          entity_id?: string | null
+          id?: string
+          meta?: Json
+        }
+        Relationships: []
+      }
+      documents: {
+        Row: {
+          approved: boolean
+          content: string
+          created_at: string
+          created_by: string | null
+          file_url: string | null
+          id: string
+          kind: string
+          organization_id: string | null
+          title: string
+          transfer_id: string | null
+        }
+        Insert: {
+          approved?: boolean
+          content: string
+          created_at?: string
+          created_by?: string | null
+          file_url?: string | null
+          id?: string
+          kind: string
+          organization_id?: string | null
+          title: string
+          transfer_id?: string | null
+        }
+        Update: {
+          approved?: boolean
+          content?: string
+          created_at?: string
+          created_by?: string | null
+          file_url?: string | null
+          id?: string
+          kind?: string
+          organization_id?: string | null
+          title?: string
+          transfer_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_transfer_id_fkey"
+            columns: ["transfer_id"]
+            isOneToOne: false
+            referencedRelation: "transfers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      logistics_profiles: {
+        Row: {
+          available: boolean
+          capacity_kg: number
+          created_at: string
+          currency: string
+          id: string
+          max_distance_km: number
+          notes: string | null
+          organization_id: string
+          price_per_km: number
+          refrigerated: boolean
+          service_areas: string[]
+          updated_at: string
+          vehicle_type: string
+        }
+        Insert: {
+          available?: boolean
+          capacity_kg?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          max_distance_km?: number
+          notes?: string | null
+          organization_id: string
+          price_per_km?: number
+          refrigerated?: boolean
+          service_areas?: string[]
+          updated_at?: string
+          vehicle_type: string
+        }
+        Update: {
+          available?: boolean
+          capacity_kg?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          max_distance_km?: number
+          notes?: string | null
+          organization_id?: string
+          price_per_km?: number
+          refrigerated?: boolean
+          service_areas?: string[]
+          updated_at?: string
+          vehicle_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "logistics_profiles_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          created_at: string
+          distance_km: number | null
+          explanation: string | null
+          generated_by: string
+          id: string
+          need_id: string
+          quantity: number
+          rationale: Json
+          recipient_org_id: string
+          recipient_response: string | null
+          resource_id: string
+          score: number
+          status: Database["public"]["Enums"]["match_status"]
+          supplier_org_id: string
+          supplier_response: string | null
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          distance_km?: number | null
+          explanation?: string | null
+          generated_by?: string
+          id?: string
+          need_id: string
+          quantity?: number
+          rationale?: Json
+          recipient_org_id: string
+          recipient_response?: string | null
+          resource_id: string
+          score?: number
+          status?: Database["public"]["Enums"]["match_status"]
+          supplier_org_id: string
+          supplier_response?: string | null
+          unit?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          distance_km?: number | null
+          explanation?: string | null
+          generated_by?: string
+          id?: string
+          need_id?: string
+          quantity?: number
+          rationale?: Json
+          recipient_org_id?: string
+          recipient_response?: string | null
+          resource_id?: string
+          score?: number
+          status?: Database["public"]["Enums"]["match_status"]
+          supplier_org_id?: string
+          supplier_response?: string | null
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_need_id_fkey"
+            columns: ["need_id"]
+            isOneToOne: false
+            referencedRelation: "needs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_recipient_org_id_fkey"
+            columns: ["recipient_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_supplier_org_id_fkey"
+            columns: ["supplier_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          is_ai: boolean
+          match_id: string | null
+          sender_id: string | null
+          sender_name: string | null
+          transfer_id: string | null
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          is_ai?: boolean
+          match_id?: string | null
+          sender_id?: string | null
+          sender_name?: string | null
+          transfer_id?: string | null
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          is_ai?: boolean
+          match_id?: string | null
+          sender_id?: string | null
+          sender_name?: string | null
+          transfer_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_transfer_id_fkey"
+            columns: ["transfer_id"]
+            isOneToOne: false
+            referencedRelation: "transfers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      needs: {
+        Row: {
+          acceptable_alternatives: string | null
+          address: string | null
+          category_id: string
+          city: string | null
+          country: string | null
+          created_at: string
+          created_by: string
+          deadline: string | null
+          delivery_requirements: string | null
+          fulfilled_quantity: number
+          has_refrigeration: boolean
+          id: string
+          latitude: number | null
+          longitude: number | null
+          min_quantity: number | null
+          organization_id: string
+          purpose: string | null
+          quantity: number
+          status: Database["public"]["Enums"]["need_status"]
+          storage_capacity: string | null
+          title: string
+          unit: string
+          updated_at: string
+          urgency_score: number
+        }
+        Insert: {
+          acceptable_alternatives?: string | null
+          address?: string | null
+          category_id: string
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          created_by: string
+          deadline?: string | null
+          delivery_requirements?: string | null
+          fulfilled_quantity?: number
+          has_refrigeration?: boolean
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          min_quantity?: number | null
+          organization_id: string
+          purpose?: string | null
+          quantity: number
+          status?: Database["public"]["Enums"]["need_status"]
+          storage_capacity?: string | null
+          title: string
+          unit?: string
+          updated_at?: string
+          urgency_score?: number
+        }
+        Update: {
+          acceptable_alternatives?: string | null
+          address?: string | null
+          category_id?: string
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          created_by?: string
+          deadline?: string | null
+          delivery_requirements?: string | null
+          fulfilled_quantity?: number
+          has_refrigeration?: boolean
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          min_quantity?: number | null
+          organization_id?: string
+          purpose?: string | null
+          quantity?: number
+          status?: Database["public"]["Enums"]["need_status"]
+          storage_capacity?: string | null
+          title?: string
+          unit?: string
+          updated_at?: string
+          urgency_score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "needs_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "resource_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "needs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      organizations: {
+        Row: {
+          address: string | null
+          city: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          country: string | null
+          created_at: string
+          description: string | null
+          documents: Json
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          owner_id: string
+          region: string | null
+          reliability_score: number
+          type: Database["public"]["Enums"]["org_type"]
+          updated_at: string
+          verification_notes: string | null
+          verification_status: Database["public"]["Enums"]["verification_status"]
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          documents?: Json
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          owner_id: string
+          region?: string | null
+          reliability_score?: number
+          type: Database["public"]["Enums"]["org_type"]
+          updated_at?: string
+          verification_notes?: string | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          documents?: Json
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          owner_id?: string
+          region?: string | null
+          reliability_score?: number
+          type?: Database["public"]["Enums"]["org_type"]
+          updated_at?: string
+          verification_notes?: string | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      resource_categories: {
+        Row: {
+          active: boolean
+          created_at: string
+          default_unit: string
+          family: string
+          id: string
+          key: string
+          name: string
+          perishable: boolean
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          default_unit?: string
+          family: string
+          id?: string
+          key: string
+          name: string
+          perishable?: boolean
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          default_unit?: string
+          family?: string
+          id?: string
+          key?: string
+          name?: string
+          perishable?: boolean
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          ai_analysis: Json | null
+          available_from: string | null
+          available_to: string | null
+          category_id: string
+          city: string | null
+          condition: string | null
+          country: string | null
+          created_at: string
+          created_by: string
+          description: string | null
+          expires_at: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          organization_id: string
+          photos: string[]
+          pickup_address: string | null
+          quantity: number
+          requires_refrigeration: boolean
+          reserved_quantity: number
+          status: Database["public"]["Enums"]["resource_status"]
+          storage_requirements: string | null
+          title: string
+          unit: string
+          updated_at: string
+          urgency_score: number
+        }
+        Insert: {
+          ai_analysis?: Json | null
+          available_from?: string | null
+          available_to?: string | null
+          category_id: string
+          city?: string | null
+          condition?: string | null
+          country?: string | null
+          created_at?: string
+          created_by: string
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          organization_id: string
+          photos?: string[]
+          pickup_address?: string | null
+          quantity: number
+          requires_refrigeration?: boolean
+          reserved_quantity?: number
+          status?: Database["public"]["Enums"]["resource_status"]
+          storage_requirements?: string | null
+          title: string
+          unit?: string
+          updated_at?: string
+          urgency_score?: number
+        }
+        Update: {
+          ai_analysis?: Json | null
+          available_from?: string | null
+          available_to?: string | null
+          category_id?: string
+          city?: string | null
+          condition?: string | null
+          country?: string | null
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          organization_id?: string
+          photos?: string[]
+          pickup_address?: string | null
+          quantity?: number
+          requires_refrigeration?: boolean
+          reserved_quantity?: number
+          status?: Database["public"]["Enums"]["resource_status"]
+          storage_requirements?: string | null
+          title?: string
+          unit?: string
+          updated_at?: string
+          urgency_score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resources_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "resource_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resources_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transfer_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          id: string
+          note: string | null
+          status: Database["public"]["Enums"]["transfer_status"]
+          transfer_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          status: Database["public"]["Enums"]["transfer_status"]
+          transfer_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          status?: Database["public"]["Enums"]["transfer_status"]
+          transfer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transfer_events_transfer_id_fkey"
+            columns: ["transfer_id"]
+            isOneToOne: false
+            referencedRelation: "transfers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transfers: {
+        Row: {
+          confirmed_by: string | null
+          created_at: string
+          created_by: string
+          delivered_at: string | null
+          delivered_quantity: number | null
+          delivery_instructions: string | null
+          delivery_notes: string | null
+          delivery_photos: string[]
+          distance_km: number | null
+          id: string
+          impact_verified: boolean
+          logistics_org_id: string | null
+          match_id: string | null
+          need_id: string
+          pickup_instructions: string | null
+          quantity: number
+          recipient_org_id: string
+          resource_id: string
+          scheduled_delivery_at: string | null
+          scheduled_pickup_at: string | null
+          status: Database["public"]["Enums"]["transfer_status"]
+          supplier_org_id: string
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          confirmed_by?: string | null
+          created_at?: string
+          created_by: string
+          delivered_at?: string | null
+          delivered_quantity?: number | null
+          delivery_instructions?: string | null
+          delivery_notes?: string | null
+          delivery_photos?: string[]
+          distance_km?: number | null
+          id?: string
+          impact_verified?: boolean
+          logistics_org_id?: string | null
+          match_id?: string | null
+          need_id: string
+          pickup_instructions?: string | null
+          quantity: number
+          recipient_org_id: string
+          resource_id: string
+          scheduled_delivery_at?: string | null
+          scheduled_pickup_at?: string | null
+          status?: Database["public"]["Enums"]["transfer_status"]
+          supplier_org_id: string
+          unit?: string
+          updated_at?: string
+        }
+        Update: {
+          confirmed_by?: string | null
+          created_at?: string
+          created_by?: string
+          delivered_at?: string | null
+          delivered_quantity?: number | null
+          delivery_instructions?: string | null
+          delivery_notes?: string | null
+          delivery_photos?: string[]
+          distance_km?: number | null
+          id?: string
+          impact_verified?: boolean
+          logistics_org_id?: string | null
+          match_id?: string | null
+          need_id?: string
+          pickup_instructions?: string | null
+          quantity?: number
+          recipient_org_id?: string
+          resource_id?: string
+          scheduled_delivery_at?: string | null
+          scheduled_pickup_at?: string | null
+          status?: Database["public"]["Enums"]["transfer_status"]
+          supplier_org_id?: string
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transfers_logistics_org_id_fkey"
+            columns: ["logistics_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transfers_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transfers_need_id_fkey"
+            columns: ["need_id"]
+            isOneToOne: false
+            referencedRelation: "needs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transfers_recipient_org_id_fkey"
+            columns: ["recipient_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transfers_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transfers_supplier_org_id_fkey"
+            columns: ["supplier_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_touch_transfer: { Args: { _id: string }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      owns_org: { Args: { _org_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      ai_action_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "executed"
+        | "failed"
+      app_role: "supplier" | "recipient" | "logistics" | "admin"
+      match_status:
+        | "proposed"
+        | "accepted"
+        | "rejected"
+        | "expired"
+        | "converted"
+      need_status: "active" | "partially_fulfilled" | "fulfilled" | "cancelled"
+      org_type: "supplier" | "recipient" | "logistics"
+      resource_status:
+        | "available"
+        | "reserved"
+        | "unavailable"
+        | "transferred"
+        | "expired"
+      transfer_status:
+        | "proposed"
+        | "accepted"
+        | "scheduled"
+        | "pickup_ready"
+        | "picked_up"
+        | "in_transit"
+        | "delivered"
+        | "impact_verified"
+        | "cancelled"
+      verification_status: "pending" | "verified" | "rejected" | "flagged"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +1049,43 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      ai_action_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "executed",
+        "failed",
+      ],
+      app_role: ["supplier", "recipient", "logistics", "admin"],
+      match_status: [
+        "proposed",
+        "accepted",
+        "rejected",
+        "expired",
+        "converted",
+      ],
+      need_status: ["active", "partially_fulfilled", "fulfilled", "cancelled"],
+      org_type: ["supplier", "recipient", "logistics"],
+      resource_status: [
+        "available",
+        "reserved",
+        "unavailable",
+        "transferred",
+        "expired",
+      ],
+      transfer_status: [
+        "proposed",
+        "accepted",
+        "scheduled",
+        "pickup_ready",
+        "picked_up",
+        "in_transit",
+        "delivered",
+        "impact_verified",
+        "cancelled",
+      ],
+      verification_status: ["pending", "verified", "rejected", "flagged"],
+    },
   },
 } as const
