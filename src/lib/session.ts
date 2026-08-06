@@ -140,5 +140,7 @@ export async function notify(
   type: string,
   link?: string,
 ) {
-  await supabase.from("notifications").insert({ user_id: userId, title, body, type, link });
+  await supabase
+    .from("notifications")
+    .insert({ user_id: userId, title, body, type, link: link ?? null });
 }
