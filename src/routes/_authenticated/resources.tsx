@@ -233,7 +233,10 @@ function ResourcesPage() {
 
   async function remove(id: string) {
     const { error } = await supabase.from("resources").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     await logAudit(userId, "resource.deleted", "resource", id, {});
     await qc.invalidateQueries({ queryKey: ["resources", activeOrg?.id] });
     toast.success("Resource removed.");
