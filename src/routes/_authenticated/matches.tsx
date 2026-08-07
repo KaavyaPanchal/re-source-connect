@@ -112,7 +112,7 @@ function MatchesPage() {
       const match = (saved ?? []).find((m) => m.id === matchId);
       if (!match) return;
       const isSupplier = match.supplier_org_id === activeOrg.id;
-      const field = isSupplier ? "supplier_response" : "recipient_response";
+      
       const other = isSupplier ? match.recipient_response : match.supplier_response;
       const decision = accept ? "accepted" : "rejected";
       const status = !accept ? "rejected" : other === "accepted" ? "accepted" : "proposed";
