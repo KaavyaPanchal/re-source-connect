@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedFleetRouteImport } from './routes/_authenticated/fleet'
+import { Route as AuthenticatedMapRouteImport } from './routes/_authenticated/map'
 import { Route as AuthenticatedMatchesRouteImport } from './routes/_authenticated/matches'
 import { Route as AuthenticatedNeedsRouteImport } from './routes/_authenticated/needs'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
@@ -43,6 +44,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
 const AuthenticatedFleetRoute = AuthenticatedFleetRouteImport.update({
   id: '/fleet',
   path: '/fleet',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMatchesRoute = AuthenticatedMatchesRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/fleet': typeof AuthenticatedFleetRoute
+  '/map': typeof AuthenticatedMapRoute
   '/matches': typeof AuthenticatedMatchesRoute
   '/needs': typeof AuthenticatedNeedsRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/fleet': typeof AuthenticatedFleetRoute
+  '/map': typeof AuthenticatedMapRoute
   '/matches': typeof AuthenticatedMatchesRoute
   '/needs': typeof AuthenticatedNeedsRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/fleet': typeof AuthenticatedFleetRoute
+  '/_authenticated/map': typeof AuthenticatedMapRoute
   '/_authenticated/matches': typeof AuthenticatedMatchesRoute
   '/_authenticated/needs': typeof AuthenticatedNeedsRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/fleet'
+    | '/map'
     | '/matches'
     | '/needs'
     | '/onboarding'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/fleet'
+    | '/map'
     | '/matches'
     | '/needs'
     | '/onboarding'
@@ -146,6 +157,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/fleet'
+    | '/_authenticated/map'
     | '/_authenticated/matches'
     | '/_authenticated/needs'
     | '/_authenticated/onboarding'
@@ -197,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedFleetRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/map': {
+      id: '/_authenticated/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof AuthenticatedMapRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/matches': {
       id: '/_authenticated/matches'
       path: '/matches'
@@ -245,6 +264,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFleetRoute: typeof AuthenticatedFleetRoute
+  AuthenticatedMapRoute: typeof AuthenticatedMapRoute
   AuthenticatedMatchesRoute: typeof AuthenticatedMatchesRoute
   AuthenticatedNeedsRoute: typeof AuthenticatedNeedsRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
@@ -256,6 +276,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFleetRoute: AuthenticatedFleetRoute,
+  AuthenticatedMapRoute: AuthenticatedMapRoute,
   AuthenticatedMatchesRoute: AuthenticatedMatchesRoute,
   AuthenticatedNeedsRoute: AuthenticatedNeedsRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
