@@ -80,3 +80,49 @@ export const analyzeListing = createServerFn({ method: "POST" })
     await supabase.from("resources").update({ ai_analysis: analysis }).eq("id", data.resourceId);
     return analysis;
   });
+
+export const assistantAsk = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        question: z.string().trim().min(2).max(2000),
+        organizationId: z.string().uuid().optional(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    const { supabase } = context;
+    const [resources, needs, transfers, orgs] = await Promise.all([
+      supabase
+        .from("resources")
+        .select("id,title,quantity,reserved_quantity,unit,city,expires_at,status,requires_refrigeration,organization_id")
+        .in("status", ["available", "reserved"])
+        .limit(80),
+      supabase
+        .from("needs")
+        .select("id,title,quantity,fulfilled_quantity,unit,city,deadline,status,has_refrigeration,organization_id")
+        .in("status", ["active", "partially_fulfilled"])
+        .limit(80),
+      supabase
+        .from("transfers")
+        .select("id,status,quantity,unit,scheduled_pickup_at,scheduled_delivery_at,supplier_org_id,recipient_org_id")
+        .limit(50),
+      supabase.from("organizations").select("id,name,type,city,verification_status").limit(80),
+    ]);
+
+    const answer = await askGateway(
+      "You are the coordination assistant for RE:SOURCE, a surplus-resource matching platform. Answer using ONLY the live database snapshot provided. Be concise and concrete: cite titles, quantities, cities and deadlines from the data. If the data does not contain the answer, say exactly what is missing. Never invent organizations, quantities or transfers.",
+      JSON.stringify({
+        now: new Date().toISOString(),
+        active_organization_id: data.organizationId ?? null,
+        organizations: orgs.data ?? [],
+        resources: resources.data ?? [],
+        needs: needs.data ?? [],
+        transfers: transfers.data ?? [],
+        question: data.question,
+      }),
+    );
+
+    return { answer: answer || "No answer produced." };
+  });
