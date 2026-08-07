@@ -49,7 +49,7 @@ export async function computeCandidates(
       const result = scoreMatch(resource, need, {
         supplierVerified: supplierOrg?.verification_status === "verified",
         recipientVerified: recipientOrg?.verification_status === "verified",
-        supplierReliability: supplierOrg?.reliability_score,
+        supplierReliability: supplierOrg?.reliability_score ?? 80,
         transportAvailable,
       });
       if (result.score < (opts.minScore ?? 25)) continue;
