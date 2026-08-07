@@ -119,7 +119,11 @@ function MatchesPage() {
 
       const { error } = await supabase
         .from("matches")
-        .update({ [field]: decision, status })
+        .update(
+          isSupplier
+            ? { supplier_response: decision, status }
+            : { recipient_response: decision, status },
+        )
         .eq("id", matchId);
       if (error) throw error;
       await logAudit(userId, `match.${decision}`, "match", matchId, {});
