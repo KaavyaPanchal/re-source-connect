@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedFleetRouteImport } from './routes/_authenticated/fleet'
+import { Route as AuthenticatedImpactRouteImport } from './routes/_authenticated/impact'
 import { Route as AuthenticatedMapRouteImport } from './routes/_authenticated/map'
 import { Route as AuthenticatedMatchesRouteImport } from './routes/_authenticated/matches'
 import { Route as AuthenticatedNeedsRouteImport } from './routes/_authenticated/needs'
@@ -44,6 +45,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
 const AuthenticatedFleetRoute = AuthenticatedFleetRouteImport.update({
   id: '/fleet',
   path: '/fleet',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedImpactRoute = AuthenticatedImpactRouteImport.update({
+  id: '/impact',
+  path: '/impact',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/fleet': typeof AuthenticatedFleetRoute
+  '/impact': typeof AuthenticatedImpactRoute
   '/map': typeof AuthenticatedMapRoute
   '/matches': typeof AuthenticatedMatchesRoute
   '/needs': typeof AuthenticatedNeedsRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/fleet': typeof AuthenticatedFleetRoute
+  '/impact': typeof AuthenticatedImpactRoute
   '/map': typeof AuthenticatedMapRoute
   '/matches': typeof AuthenticatedMatchesRoute
   '/needs': typeof AuthenticatedNeedsRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/fleet': typeof AuthenticatedFleetRoute
+  '/_authenticated/impact': typeof AuthenticatedImpactRoute
   '/_authenticated/map': typeof AuthenticatedMapRoute
   '/_authenticated/matches': typeof AuthenticatedMatchesRoute
   '/_authenticated/needs': typeof AuthenticatedNeedsRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/fleet'
+    | '/impact'
     | '/map'
     | '/matches'
     | '/needs'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/fleet'
+    | '/impact'
     | '/map'
     | '/matches'
     | '/needs'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/fleet'
+    | '/_authenticated/impact'
     | '/_authenticated/map'
     | '/_authenticated/matches'
     | '/_authenticated/needs'
@@ -207,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/fleet'
       fullPath: '/fleet'
       preLoaderRoute: typeof AuthenticatedFleetRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/impact': {
+      id: '/_authenticated/impact'
+      path: '/impact'
+      fullPath: '/impact'
+      preLoaderRoute: typeof AuthenticatedImpactRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/map': {
@@ -264,6 +283,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFleetRoute: typeof AuthenticatedFleetRoute
+  AuthenticatedImpactRoute: typeof AuthenticatedImpactRoute
   AuthenticatedMapRoute: typeof AuthenticatedMapRoute
   AuthenticatedMatchesRoute: typeof AuthenticatedMatchesRoute
   AuthenticatedNeedsRoute: typeof AuthenticatedNeedsRoute
@@ -276,6 +296,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFleetRoute: AuthenticatedFleetRoute,
+  AuthenticatedImpactRoute: AuthenticatedImpactRoute,
   AuthenticatedMapRoute: AuthenticatedMapRoute,
   AuthenticatedMatchesRoute: AuthenticatedMatchesRoute,
   AuthenticatedNeedsRoute: AuthenticatedNeedsRoute,
