@@ -905,6 +905,16 @@ export type Database = {
         | "expired"
         | "converted"
       need_status: "active" | "partially_fulfilled" | "fulfilled" | "cancelled"
+      org_category:
+        | "nonprofit_ngo"
+        | "charity"
+        | "school"
+        | "hospital"
+        | "government"
+        | "community"
+        | "religious"
+        | "business"
+        | "other"
       org_type: "supplier" | "recipient" | "logistics"
       resource_status:
         | "available"
@@ -922,7 +932,25 @@ export type Database = {
         | "delivered"
         | "impact_verified"
         | "cancelled"
-      verification_status: "pending" | "verified" | "rejected" | "flagged"
+      verification_doc_kind:
+        | "certificate_of_registration"
+        | "certificate_of_incorporation"
+        | "charity_registration"
+        | "nonprofit_registration"
+        | "government_registration"
+        | "business_registration"
+        | "tax_exemption"
+        | "government_license"
+        | "other_official_proof"
+      verification_status:
+        | "pending"
+        | "verified"
+        | "rejected"
+        | "flagged"
+        | "not_verified"
+        | "under_review"
+        | "info_required"
+        | "suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1066,6 +1094,17 @@ export const Constants = {
         "converted",
       ],
       need_status: ["active", "partially_fulfilled", "fulfilled", "cancelled"],
+      org_category: [
+        "nonprofit_ngo",
+        "charity",
+        "school",
+        "hospital",
+        "government",
+        "community",
+        "religious",
+        "business",
+        "other",
+      ],
       org_type: ["supplier", "recipient", "logistics"],
       resource_status: [
         "available",
@@ -1085,7 +1124,27 @@ export const Constants = {
         "impact_verified",
         "cancelled",
       ],
-      verification_status: ["pending", "verified", "rejected", "flagged"],
+      verification_doc_kind: [
+        "certificate_of_registration",
+        "certificate_of_incorporation",
+        "charity_registration",
+        "nonprofit_registration",
+        "government_registration",
+        "business_registration",
+        "tax_exemption",
+        "government_license",
+        "other_official_proof",
+      ],
+      verification_status: [
+        "pending",
+        "verified",
+        "rejected",
+        "flagged",
+        "not_verified",
+        "under_review",
+        "info_required",
+        "suspended",
+      ],
     },
   },
 } as const
