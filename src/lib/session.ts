@@ -17,11 +17,43 @@ export type Organization = {
   country: string | null;
   latitude: number | null;
   longitude: number | null;
-  verification_status: "pending" | "verified" | "rejected" | "flagged";
+  verification_status:
+    | "not_verified"
+    | "under_review"
+    | "verified"
+    | "info_required"
+    | "rejected"
+    | "suspended"
+    | "pending"
+    | "flagged";
   verification_notes: string | null;
   reliability_score: number;
   created_at: string;
+  org_category: string;
+  website: string | null;
+  registration_number: string | null;
+  issuing_authority: string | null;
+  registration_country: string | null;
+  registration_date: string | null;
+  doc_kind: string | null;
+  doc_path: string | null;
+  doc_uploaded_at: string | null;
+  email_verified: boolean;
+  phone_verified: boolean;
+  rep_full_name: string | null;
+  rep_position: string | null;
+  rep_relationship: string | null;
+  accepted_terms_at: string | null;
+  accepted_privacy_at: string | null;
+  consent_verification_at: string | null;
+  consent_comms_at: string | null;
+  ai_risk_level: string | null;
+  ai_risk_reasons: unknown;
+  ai_risk_at: string | null;
+  submitted_at: string | null;
+  verified_at: string | null;
 };
+
 
 export function useAuthUser() {
   const [user, setUser] = useState<User | null>(null);

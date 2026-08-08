@@ -63,6 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/search", label: "Search", icon: Search, show: true },
     { to: "/map", label: "Map", icon: MapIcon, show: true },
     { to: "/impact", label: "Impact", icon: BarChart3, show: true },
+    { to: "/verification", label: "Verification", icon: ShieldCheck, show: true },
     { to: "/admin", label: "Admin", icon: ShieldCheck, show: isAdmin },
   ].filter((i) => i.show);
 

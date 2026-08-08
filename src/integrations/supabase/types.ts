@@ -467,69 +467,211 @@ export type Database = {
         }
         Relationships: []
       }
+      org_admin_notes: {
+        Row: {
+          admin_id: string
+          created_at: string
+          id: string
+          note: string
+          organization_id: string
+        }
+        Insert: {
+          admin_id: string
+          created_at?: string
+          id?: string
+          note: string
+          organization_id: string
+        }
+        Update: {
+          admin_id?: string
+          created_at?: string
+          id?: string
+          note?: string
+          organization_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_admin_notes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      org_verification_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          event: string
+          id: string
+          meta: Json
+          note: string | null
+          organization_id: string
+          status: Database["public"]["Enums"]["verification_status"] | null
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          event: string
+          id?: string
+          meta?: Json
+          note?: string | null
+          organization_id: string
+          status?: Database["public"]["Enums"]["verification_status"] | null
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          event?: string
+          id?: string
+          meta?: Json
+          note?: string | null
+          organization_id?: string
+          status?: Database["public"]["Enums"]["verification_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_verification_events_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
+          accepted_privacy_at: string | null
+          accepted_terms_at: string | null
           address: string | null
+          ai_risk_at: string | null
+          ai_risk_level: string | null
+          ai_risk_reasons: Json
           city: string | null
+          consent_comms_at: string | null
+          consent_verification_at: string | null
           contact_email: string | null
           contact_phone: string | null
           country: string | null
           created_at: string
           description: string | null
+          doc_kind: Database["public"]["Enums"]["verification_doc_kind"] | null
+          doc_path: string | null
+          doc_uploaded_at: string | null
           documents: Json
+          email_verified: boolean
           id: string
+          issuing_authority: string | null
           latitude: number | null
           longitude: number | null
           name: string
+          org_category: Database["public"]["Enums"]["org_category"]
           owner_id: string
+          phone_verified: boolean
           region: string | null
+          registration_country: string | null
+          registration_date: string | null
+          registration_number: string | null
           reliability_score: number
+          rep_full_name: string | null
+          rep_position: string | null
+          rep_relationship: string | null
+          submitted_at: string | null
           type: Database["public"]["Enums"]["org_type"]
           updated_at: string
           verification_notes: string | null
           verification_status: Database["public"]["Enums"]["verification_status"]
+          verified_at: string | null
+          website: string | null
         }
         Insert: {
+          accepted_privacy_at?: string | null
+          accepted_terms_at?: string | null
           address?: string | null
+          ai_risk_at?: string | null
+          ai_risk_level?: string | null
+          ai_risk_reasons?: Json
           city?: string | null
+          consent_comms_at?: string | null
+          consent_verification_at?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           country?: string | null
           created_at?: string
           description?: string | null
+          doc_kind?: Database["public"]["Enums"]["verification_doc_kind"] | null
+          doc_path?: string | null
+          doc_uploaded_at?: string | null
           documents?: Json
+          email_verified?: boolean
           id?: string
+          issuing_authority?: string | null
           latitude?: number | null
           longitude?: number | null
           name: string
+          org_category?: Database["public"]["Enums"]["org_category"]
           owner_id: string
+          phone_verified?: boolean
           region?: string | null
+          registration_country?: string | null
+          registration_date?: string | null
+          registration_number?: string | null
           reliability_score?: number
+          rep_full_name?: string | null
+          rep_position?: string | null
+          rep_relationship?: string | null
+          submitted_at?: string | null
           type: Database["public"]["Enums"]["org_type"]
           updated_at?: string
           verification_notes?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status"]
+          verified_at?: string | null
+          website?: string | null
         }
         Update: {
+          accepted_privacy_at?: string | null
+          accepted_terms_at?: string | null
           address?: string | null
+          ai_risk_at?: string | null
+          ai_risk_level?: string | null
+          ai_risk_reasons?: Json
           city?: string | null
+          consent_comms_at?: string | null
+          consent_verification_at?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           country?: string | null
           created_at?: string
           description?: string | null
+          doc_kind?: Database["public"]["Enums"]["verification_doc_kind"] | null
+          doc_path?: string | null
+          doc_uploaded_at?: string | null
           documents?: Json
+          email_verified?: boolean
           id?: string
+          issuing_authority?: string | null
           latitude?: number | null
           longitude?: number | null
           name?: string
+          org_category?: Database["public"]["Enums"]["org_category"]
           owner_id?: string
+          phone_verified?: boolean
           region?: string | null
+          registration_country?: string | null
+          registration_date?: string | null
+          registration_number?: string | null
           reliability_score?: number
+          rep_full_name?: string | null
+          rep_position?: string | null
+          rep_relationship?: string | null
+          submitted_at?: string | null
           type?: Database["public"]["Enums"]["org_type"]
           updated_at?: string
           verification_notes?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status"]
+          verified_at?: string | null
+          website?: string | null
         }
         Relationships: []
       }
@@ -881,6 +1023,14 @@ export type Database = {
     }
     Functions: {
       can_touch_transfer: { Args: { _id: string }; Returns: boolean }
+      find_org_duplicates: {
+        Args: { _org_id: string }
+        Returns: {
+          id: string
+          name: string
+          reason: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -888,6 +1038,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      org_is_verified: { Args: { _org_id: string }; Returns: boolean }
       owns_org: { Args: { _org_id: string }; Returns: boolean }
     }
     Enums: {
@@ -905,6 +1056,16 @@ export type Database = {
         | "expired"
         | "converted"
       need_status: "active" | "partially_fulfilled" | "fulfilled" | "cancelled"
+      org_category:
+        | "nonprofit_ngo"
+        | "charity"
+        | "school"
+        | "hospital"
+        | "government"
+        | "community"
+        | "religious"
+        | "business"
+        | "other"
       org_type: "supplier" | "recipient" | "logistics"
       resource_status:
         | "available"
@@ -922,7 +1083,25 @@ export type Database = {
         | "delivered"
         | "impact_verified"
         | "cancelled"
-      verification_status: "pending" | "verified" | "rejected" | "flagged"
+      verification_doc_kind:
+        | "certificate_of_registration"
+        | "certificate_of_incorporation"
+        | "charity_registration"
+        | "nonprofit_registration"
+        | "government_registration"
+        | "business_registration"
+        | "tax_exemption"
+        | "government_license"
+        | "other_official_proof"
+      verification_status:
+        | "pending"
+        | "verified"
+        | "rejected"
+        | "flagged"
+        | "not_verified"
+        | "under_review"
+        | "info_required"
+        | "suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1066,6 +1245,17 @@ export const Constants = {
         "converted",
       ],
       need_status: ["active", "partially_fulfilled", "fulfilled", "cancelled"],
+      org_category: [
+        "nonprofit_ngo",
+        "charity",
+        "school",
+        "hospital",
+        "government",
+        "community",
+        "religious",
+        "business",
+        "other",
+      ],
       org_type: ["supplier", "recipient", "logistics"],
       resource_status: [
         "available",
@@ -1085,7 +1275,27 @@ export const Constants = {
         "impact_verified",
         "cancelled",
       ],
-      verification_status: ["pending", "verified", "rejected", "flagged"],
+      verification_doc_kind: [
+        "certificate_of_registration",
+        "certificate_of_incorporation",
+        "charity_registration",
+        "nonprofit_registration",
+        "government_registration",
+        "business_registration",
+        "tax_exemption",
+        "government_license",
+        "other_official_proof",
+      ],
+      verification_status: [
+        "pending",
+        "verified",
+        "rejected",
+        "flagged",
+        "not_verified",
+        "under_review",
+        "info_required",
+        "suspended",
+      ],
     },
   },
 } as const
