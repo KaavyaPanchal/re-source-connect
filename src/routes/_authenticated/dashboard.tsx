@@ -265,13 +265,10 @@ function Dashboard() {
                 <span className="text-xs text-muted-foreground">
                   {Number(t.quantity).toLocaleString()} {t.unit}
                 </span>
-                <Link
-                  to="/transfers/$transferId"
-                  params={{ transferId: t.id }}
-                  className="ml-auto text-xs text-primary hover:underline"
-                >
+                <Link to="/transfers" className="ml-auto text-xs text-primary hover:underline">
                   Open
                 </Link>
+
               </li>
             ))}
           </ul>
