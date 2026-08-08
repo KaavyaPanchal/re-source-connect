@@ -178,7 +178,7 @@ function VerificationPage() {
       if (upErr) throw upErr;
       const { error } = await supabase
         .from("organizations")
-        .update({ doc_kind: docKind, doc_path: path, doc_uploaded_at: new Date().toISOString() })
+        .update({ doc_kind: docKind as never, doc_path: path, doc_uploaded_at: new Date().toISOString() })
         .eq("id", org.id);
       if (error) throw error;
       await supabase.from("org_verification_events").insert({
