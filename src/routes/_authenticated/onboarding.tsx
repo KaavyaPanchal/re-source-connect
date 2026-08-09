@@ -138,8 +138,14 @@ function Onboarding() {
 
   function next() {
     if (step === 0) {
-      if (!type) return toast.error("Choose an organization type");
-      if (!category) return toast.error("Choose the category that best describes you");
+      if (!type) {
+        toast.error("Choose an organization type");
+        return;
+      }
+      if (!category) {
+        toast.error("Choose the category that best describes you");
+        return;
+      }
     }
     if (step === 1) {
       const parsed = detailsSchema.safeParse({
@@ -147,11 +153,17 @@ function Onboarding() {
         latitude: form.latitude ? Number(form.latitude) : null,
         longitude: form.longitude ? Number(form.longitude) : null,
       });
-      if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
+      if (!parsed.success) {
+        toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
+        return;
+      }
     }
     if (step === 2) {
       const parsed = repSchema.safeParse(form);
-      if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
+      if (!parsed.success) {
+        toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
+        return;
+      }
     }
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
   }
