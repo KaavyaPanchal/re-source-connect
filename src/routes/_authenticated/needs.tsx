@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useApp } from "@/lib/app-context";
 import { useCategories, useRealtime, logAudit } from "@/lib/session";
 import { EmptyState, Field, PageHeader, StatusPill } from "@/components/bits";
+import { VerificationGate } from "@/components/verification";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -213,6 +214,21 @@ function NeedsPage() {
   }
 
   if (!activeOrg) return null;
+
+  if (activeOrg.verification_status !== "verified") {
+    return (
+      <div>
+        <PageHeader
+          label="Demand side"
+          title="Needs"
+          description="Publishing needs is available once your organization is verified."
+        />
+        <VerificationGate status={activeOrg.verification_status} action="publish needs">
+          <div />
+        </VerificationGate>
+      </div>
+    );
+  }
 
   return (
     <div>
