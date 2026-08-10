@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://yhtyslnmirkmkyytiveq.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "re-source-connect",
+      "version": "0.1.0",
+      "title": "RE:SOURCE Connect"
+    },
+    "tools": [
+      {
+        "name": "list_surplus_resources",
+        "title": "List surplus resources",
+        "description": "List surplus resource listings visible to the signed-in user, newest first. Optionally filter by city or free-text title match.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "city": {
+              "description": "Filter by city name.",
+              "type": "string"
+            },
+            "query": {
+              "description": "Case-insensitive match on the listing title.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Maximum rows to return (default 25, max 100).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_needs",
+        "title": "List needs",
+        "description": "List published resource needs visible to the signed-in user, newest first. Optionally filter by city or free-text title match.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "city": {
+              "description": "Filter by city name.",
+              "type": "string"
+            },
+            "query": {
+              "description": "Case-insensitive match on the need title.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Maximum rows to return (default 25, max 100).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_transfers",
+        "title": "List transfers",
+        "description": "List resource transfers the signed-in user can see, newest first. Optionally filter by transfer status.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "status": {
+              "description": "Filter by transfer status.",
+              "type": "string",
+              "enum": [
+                "proposed",
+                "scheduled",
+                "in_transit",
+                "picked_up",
+                "delivered",
+                "verified",
+                "cancelled"
+              ]
+            },
+            "limit": {
+              "description": "Maximum rows to return (default 25, max 100).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_organizations",
+        "title": "List my organizations",
+        "description": "List the organizations the signed-in user belongs to, with verification status. Use the returned ids when creating needs.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_resource_categories",
+        "title": "List resource categories",
+        "description": "List the resource categories used to classify surplus listings and needs.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_need",
+        "title": "Create a need",
+        "description": "Publish a new resource need for one of the signed-in user's organizations. Call list_my_organizations and list_resource_categories first to get valid ids.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "organization_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Organization publishing the need."
+            },
+            "category_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Resource category id."
+            },
+            "title": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 160,
+              "description": "Short title of what is needed."
+            },
+            "quantity": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Quantity needed."
+            },
+            "unit": {
+              "description": "Unit of measure, e.g. kg or units.",
+              "type": "string",
+              "maxLength": 32
+            },
+            "city": {
+              "description": "Delivery city.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "deadline": {
+              "description": "ISO 8601 date/time the need must be met by.",
+              "type": "string"
+            },
+            "purpose": {
+              "description": "Who this serves and why.",
+              "type": "string",
+              "maxLength": 2000
+            },
+            "has_refrigeration": {
+              "description": "Whether the recipient has refrigeration.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "organization_id",
+            "category_id",
+            "title",
+            "quantity"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
