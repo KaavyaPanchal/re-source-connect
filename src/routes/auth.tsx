@@ -8,11 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Wordmark } from "@/components/app-shell";
 import { z } from "zod";
 
-type Search = { mode?: "signin" | "signup" };
+type Search = { mode?: "signin" | "signup"; next?: string };
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): Search => ({
     mode: search["mode"] === "signup" ? "signup" : "signin",
+    ...(typeof search["next"] === "string" && search["next"].startsWith("/")
+      ? { next: search["next"] }
+      : {}),
   }),
   head: () => ({
     meta: [
@@ -35,7 +38,7 @@ const schema = z.object({
 });
 
 function AuthPage() {
-  const { mode } = Route.useSearch();
+  const { mode, next } = Route.useSearch();
   const navigate = useNavigate();
   const isSignup = mode === "signup";
   const [email, setEmail] = useState("");
@@ -46,9 +49,14 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) void navigate({ to: "/dashboard", replace: true });
+      if (!data.session) return;
+      if (next) {
+        window.location.href = next;
+        return;
+      }
+      void navigate({ to: "/dashboard", replace: true });
     });
-  }, [navigate]);
+  }, [navigate, next]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -64,7 +72,7 @@ function AuthPage() {
           email: parsed.data.email,
           password: parsed.data.password,
           options: {
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: next ? window.location.origin + next : window.location.origin,
             data: { full_name: parsed.data.fullName ?? "" },
           },
         });
@@ -74,6 +82,10 @@ function AuthPage() {
           toast.success("Check your email to confirm your account.");
           return;
         }
+        if (next) {
+          window.location.href = next;
+          return;
+        }
         void navigate({ to: "/onboarding", replace: true });
       } else {
         const { error } = await supabase.auth.signInWithPassword({
@@ -81,6 +93,10 @@ function AuthPage() {
           password: parsed.data.password,
         });
         if (error) throw error;
+        if (next) {
+          window.location.href = next;
+          return;
+        }
         void navigate({ to: "/dashboard", replace: true });
       }
     } catch (err) {
