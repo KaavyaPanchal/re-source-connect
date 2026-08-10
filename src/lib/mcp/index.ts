@@ -19,6 +19,7 @@ export default defineMcp({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated",
   }),
+  // exactOptionalPropertyTypes flags the optional outputSchema on defineTool results.
   tools: [
     listSurplusResources,
     listNeeds,
@@ -26,5 +27,5 @@ export default defineMcp({
     listMyOrganizations,
     listResourceCategories,
     createNeed,
-  ],
+  ] as unknown as Parameters<typeof defineMcp>[0]["tools"],
 });
