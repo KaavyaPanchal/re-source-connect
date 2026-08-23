@@ -176,7 +176,7 @@ function MatchesPage() {
       }
 
       const { data: orgs } = await supabase
-        .from("organizations")
+        .from("organizations_directory")
         .select("owner_id")
         .in("id", [match.supplier_org_id, match.recipient_org_id]);
       for (const o of orgs ?? []) {

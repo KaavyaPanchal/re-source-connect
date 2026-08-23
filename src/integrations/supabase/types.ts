@@ -675,6 +675,60 @@ export type Database = {
         }
         Relationships: []
       }
+      organizations_directory: {
+        Row: {
+          city: string | null
+          country: string | null
+          created_at: string
+          description: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          org_category: Database["public"]["Enums"]["org_category"]
+          owner_id: string
+          region: string | null
+          reliability_score: number
+          type: Database["public"]["Enums"]["org_type"]
+          verification_status: Database["public"]["Enums"]["verification_status"]
+          website: string | null
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          id: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          org_category: Database["public"]["Enums"]["org_category"]
+          owner_id: string
+          region?: string | null
+          reliability_score?: number
+          type: Database["public"]["Enums"]["org_type"]
+          verification_status: Database["public"]["Enums"]["verification_status"]
+          website?: string | null
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          org_category?: Database["public"]["Enums"]["org_category"]
+          owner_id?: string
+          region?: string | null
+          reliability_score?: number
+          type?: Database["public"]["Enums"]["org_type"]
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+          website?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -1022,6 +1076,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_touch_match: { Args: { _id: string }; Returns: boolean }
       can_touch_transfer: { Args: { _id: string }; Returns: boolean }
       find_org_duplicates: {
         Args: { _org_id: string }

@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.can_touch_match(uuid) FROM PUBLIC, anon, authenticated;

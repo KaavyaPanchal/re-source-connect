@@ -84,10 +84,13 @@ export const assessOrgRisk = createServerFn({ method: "POST" })
       .single();
     if (error || !org) throw new Error("Organization not found");
 
-    const { data: isAdmin } = await supabase.rpc("has_role", {
-      _user_id: userId,
-      _role: "admin",
-    });
+    const { data: adminRow } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId)
+      .eq("role", "admin")
+      .maybeSingle();
+    const isAdmin = !!adminRow;
     if (!isAdmin && org.owner_id !== userId) throw new Error("Forbidden");
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -198,10 +201,13 @@ export const getDocumentUrl = createServerFn({ method: "POST" })
     if (error || !org) throw new Error("Organization not found");
     if (!org.doc_path) throw new Error("No document uploaded");
 
-    const { data: isAdmin } = await supabase.rpc("has_role", {
-      _user_id: userId,
-      _role: "admin",
-    });
+    const { data: adminRow } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId)
+      .eq("role", "admin")
+      .maybeSingle();
+    const isAdmin = !!adminRow;
     if (!isAdmin && org.owner_id !== userId) throw new Error("Forbidden");
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

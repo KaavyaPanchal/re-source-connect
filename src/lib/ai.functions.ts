@@ -108,7 +108,7 @@ export const assistantAsk = createServerFn({ method: "POST" })
         .from("transfers")
         .select("id,status,quantity,unit,scheduled_pickup_at,scheduled_delivery_at,supplier_org_id,recipient_org_id")
         .limit(50),
-      supabase.from("organizations").select("id,name,type,city,verification_status").limit(80),
+      supabase.from("organizations_directory").select("id,name,type,city,verification_status").limit(80),
     ]);
 
     const answer = await askGateway(
