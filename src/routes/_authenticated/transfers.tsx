@@ -94,7 +94,7 @@ function TransfersPage() {
     queryKey: ["carriers"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("organizations")
+        .from("organizations_directory")
         .select("id, name, city")
         .eq("type", "logistics");
       if (error) throw error;
@@ -111,7 +111,7 @@ function TransfersPage() {
       if (error) throw error;
       await logAudit(userId, `transfer.${next}`, "transfer", t.id, {});
       const { data: orgs } = await supabase
-        .from("organizations")
+        .from("organizations_directory")
         .select("owner_id")
         .in("id", [t.supplier_org_id, t.recipient_org_id]);
       for (const o of orgs ?? []) {

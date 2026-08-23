@@ -25,14 +25,14 @@ export async function computeCandidates(
   const [resRes, needRes, orgRes, logRes] = await Promise.all([
     supabase.from("resources").select("*").in("status", ["available", "reserved"]),
     supabase.from("needs").select("*").in("status", ["active", "partially_fulfilled"]),
-    supabase.from("organizations").select("*"),
+    supabase.from("organizations_directory").select("*"),
     supabase.from("logistics_profiles").select("*").eq("available", true),
   ]);
   if (resRes.error) throw resRes.error;
   if (needRes.error) throw needRes.error;
   if (orgRes.error) throw orgRes.error;
 
-  const orgs = (orgRes.data ?? []) as Organization[];
+  const orgs = (orgRes.data ?? []) as unknown as Organization[];
   const orgById = new Map(orgs.map((o) => [o.id, o]));
   const transportAvailable = (logRes.data ?? []).length > 0;
 

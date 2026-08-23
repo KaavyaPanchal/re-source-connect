@@ -41,7 +41,7 @@ function MapPage() {
       const [res, needs, orgs] = await Promise.all([
         supabase.from("resources").select("*").in("status", ["available", "reserved"]),
         supabase.from("needs").select("*").in("status", ["active", "partially_fulfilled"]),
-        supabase.from("organizations").select("*").eq("type", "logistics"),
+        supabase.from("organizations_directory").select("*").eq("type", "logistics"),
       ]);
       if (res.error) throw res.error;
       if (needs.error) throw needs.error;

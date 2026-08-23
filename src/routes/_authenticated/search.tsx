@@ -43,7 +43,7 @@ function SearchPage() {
       const [res, needs, orgs] = await Promise.all([
         supabase.from("resources").select("*").order("created_at", { ascending: false }).limit(300),
         supabase.from("needs").select("*").order("created_at", { ascending: false }).limit(300),
-        supabase.from("organizations").select("*").order("name").limit(300),
+        supabase.from("organizations_directory").select("*").order("name").limit(300),
       ]);
       if (res.error) throw res.error;
       if (needs.error) throw needs.error;
