@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AcceptableUseRouteImport } from './routes/acceptable-use'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ComplianceRouteImport } from './routes/compliance'
+import { Route as LegalRouteImport } from './routes/legal'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -42,9 +45,24 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcceptableUseRoute = AcceptableUseRouteImport.update({
+  id: '/acceptable-use',
+  path: '/acceptable-use',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComplianceRoute = ComplianceRouteImport.update({
+  id: '/compliance',
+  path: '/compliance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -154,7 +172,10 @@ const Char91DotmcpChar93InvokeToolToolRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acceptable-use': typeof AcceptableUseRoute
   '/auth': typeof AuthRoute
+  '/compliance': typeof ComplianceRoute
+  '/legal': typeof LegalRoute
   '/mcp': typeof McpRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -178,7 +199,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acceptable-use': typeof AcceptableUseRoute
   '/auth': typeof AuthRoute
+  '/compliance': typeof ComplianceRoute
+  '/legal': typeof LegalRoute
   '/mcp': typeof McpRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -204,7 +228,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/acceptable-use': typeof AcceptableUseRoute
   '/auth': typeof AuthRoute
+  '/compliance': typeof ComplianceRoute
+  '/legal': typeof LegalRoute
   '/mcp': typeof McpRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -230,7 +257,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/acceptable-use'
     | '/auth'
+    | '/compliance'
+    | '/legal'
     | '/mcp'
     | '/privacy'
     | '/terms'
@@ -254,7 +284,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/acceptable-use'
     | '/auth'
+    | '/compliance'
+    | '/legal'
     | '/mcp'
     | '/privacy'
     | '/terms'
@@ -279,7 +312,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/acceptable-use'
     | '/auth'
+    | '/compliance'
+    | '/legal'
     | '/mcp'
     | '/privacy'
     | '/terms'
@@ -305,7 +341,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AcceptableUseRoute: typeof AcceptableUseRoute
   AuthRoute: typeof AuthRoute
+  ComplianceRoute: typeof ComplianceRoute
+  LegalRoute: typeof LegalRoute
   McpRoute: typeof McpRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
@@ -331,11 +370,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/acceptable-use': {
+      id: '/acceptable-use'
+      path: '/acceptable-use'
+      fullPath: '/acceptable-use'
+      preLoaderRoute: typeof AcceptableUseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compliance': {
+      id: '/compliance'
+      path: '/compliance'
+      fullPath: '/compliance'
+      preLoaderRoute: typeof ComplianceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -519,7 +579,10 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AcceptableUseRoute: AcceptableUseRoute,
   AuthRoute: AuthRoute,
+  ComplianceRoute: ComplianceRoute,
+  LegalRoute: LegalRoute,
   McpRoute: McpRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,

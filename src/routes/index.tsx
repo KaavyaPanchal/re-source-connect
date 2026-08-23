@@ -157,8 +157,26 @@ function Landing() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-8">
           <Wordmark />
-          <p className="text-xs text-muted-foreground">
-            Built as operating infrastructure, not a demonstration.
+          <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
+            <Link to="/terms" className="hover:text-foreground">
+              Terms &amp; Conditions
+            </Link>
+            <Link to="/privacy" className="hover:text-foreground">
+              Privacy Policy
+            </Link>
+            <Link to="/acceptable-use" className="hover:text-foreground">
+              Acceptable Use
+            </Link>
+            <Link to="/compliance" className="hover:text-foreground">
+              Compliance
+            </Link>
+            <Link to="/legal" className="hover:text-foreground">
+              Legal Center
+            </Link>
+          </nav>
+          <p className="w-full text-xs text-muted-foreground">
+            Built as operating infrastructure, not a demonstration. RE:SOURCE is not a government
+            authority; platform verification is not government accreditation.
           </p>
         </div>
       </footer>
