@@ -59,13 +59,6 @@ export type Database = {
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "ai_actions_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
         ]
       }
       audit_logs: {
@@ -144,13 +137,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "documents_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "documents_transfer_id_fkey"
             columns: ["transfer_id"]
             isOneToOne: false
@@ -211,13 +197,6 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "logistics_profiles_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
             referencedColumns: ["id"]
           },
         ]
@@ -296,13 +275,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "matches_recipient_org_id_fkey"
-            columns: ["recipient_org_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "matches_resource_id_fkey"
             columns: ["resource_id"]
             isOneToOne: false
@@ -314,13 +286,6 @@ export type Database = {
             columns: ["supplier_org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "matches_supplier_org_id_fkey"
-            columns: ["supplier_org_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
             referencedColumns: ["id"]
           },
         ]
@@ -467,13 +432,6 @@ export type Database = {
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "needs_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
         ]
       }
       notifications: {
@@ -539,13 +497,6 @@ export type Database = {
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "org_admin_notes_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
         ]
       }
       org_verification_events: {
@@ -585,13 +536,6 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "org_verification_events_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
             referencedColumns: ["id"]
           },
         ]
@@ -727,6 +671,60 @@ export type Database = {
           verification_notes?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status"]
           verified_at?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      organizations_directory: {
+        Row: {
+          city: string | null
+          country: string | null
+          created_at: string
+          description: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          org_category: Database["public"]["Enums"]["org_category"]
+          owner_id: string
+          region: string | null
+          reliability_score: number
+          type: Database["public"]["Enums"]["org_type"]
+          verification_status: Database["public"]["Enums"]["verification_status"]
+          website: string | null
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          id: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          org_category: Database["public"]["Enums"]["org_category"]
+          owner_id: string
+          region?: string | null
+          reliability_score?: number
+          type: Database["public"]["Enums"]["org_type"]
+          verification_status: Database["public"]["Enums"]["verification_status"]
+          website?: string | null
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          org_category?: Database["public"]["Enums"]["org_category"]
+          owner_id?: string
+          region?: string | null
+          reliability_score?: number
+          type?: Database["public"]["Enums"]["org_type"]
+          verification_status?: Database["public"]["Enums"]["verification_status"]
           website?: string | null
         }
         Relationships: []
@@ -891,13 +889,6 @@ export type Database = {
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "resources_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
         ]
       }
       transfer_events: {
@@ -1023,13 +1014,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "transfers_logistics_org_id_fkey"
-            columns: ["logistics_org_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "transfers_match_id_fkey"
             columns: ["match_id"]
             isOneToOne: false
@@ -1051,13 +1035,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "transfers_recipient_org_id_fkey"
-            columns: ["recipient_org_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "transfers_resource_id_fkey"
             columns: ["resource_id"]
             isOneToOne: false
@@ -1069,13 +1046,6 @@ export type Database = {
             columns: ["supplier_org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "transfers_supplier_org_id_fkey"
-            columns: ["supplier_org_id"]
-            isOneToOne: false
-            referencedRelation: "organizations_directory"
             referencedColumns: ["id"]
           },
         ]
@@ -1103,66 +1073,7 @@ export type Database = {
       }
     }
     Views: {
-      organizations_directory: {
-        Row: {
-          city: string | null
-          country: string | null
-          created_at: string | null
-          description: string | null
-          id: string | null
-          latitude: number | null
-          longitude: number | null
-          name: string | null
-          org_category: Database["public"]["Enums"]["org_category"] | null
-          owner_id: string | null
-          region: string | null
-          reliability_score: number | null
-          type: Database["public"]["Enums"]["org_type"] | null
-          verification_status:
-            | Database["public"]["Enums"]["verification_status"]
-            | null
-          website: string | null
-        }
-        Insert: {
-          city?: string | null
-          country?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string | null
-          latitude?: number | null
-          longitude?: number | null
-          name?: string | null
-          org_category?: Database["public"]["Enums"]["org_category"] | null
-          owner_id?: string | null
-          region?: string | null
-          reliability_score?: number | null
-          type?: Database["public"]["Enums"]["org_type"] | null
-          verification_status?:
-            | Database["public"]["Enums"]["verification_status"]
-            | null
-          website?: string | null
-        }
-        Update: {
-          city?: string | null
-          country?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string | null
-          latitude?: number | null
-          longitude?: number | null
-          name?: string | null
-          org_category?: Database["public"]["Enums"]["org_category"] | null
-          owner_id?: string | null
-          region?: string | null
-          reliability_score?: number | null
-          type?: Database["public"]["Enums"]["org_type"] | null
-          verification_status?:
-            | Database["public"]["Enums"]["verification_status"]
-            | null
-          website?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       can_touch_match: { Args: { _id: string }; Returns: boolean }
