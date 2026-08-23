@@ -201,6 +201,22 @@ function AuthPage() {
                   {isSignup ? "Sign in" : "Create one"}
                 </Link>
               </p>
+
+              <p className="mt-4 text-center text-xs text-muted-foreground">
+                By continuing you agree to the{" "}
+                <Link to="/terms" className="text-primary hover:underline">
+                  terms
+                </Link>
+                ,{" "}
+                <Link to="/acceptable-use" className="text-primary hover:underline">
+                  acceptable use policy
+                </Link>{" "}
+                and{" "}
+                <Link to="/privacy" className="text-primary hover:underline">
+                  privacy policy
+                </Link>
+                .
+              </p>
             </>
           )}
         </div>

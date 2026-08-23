@@ -167,7 +167,23 @@ export function AppShell({ children }: { children: ReactNode }) {
           </ul>
         </nav>
 
-        <main className="min-w-0 flex-1 pb-16">{children}</main>
+        <main className="min-w-0 flex-1 pb-16">
+          {children}
+          <div className="mt-16 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-5 text-xs text-muted-foreground">
+            <Link to="/terms" className="hover:text-foreground">
+              Terms
+            </Link>
+            <Link to="/privacy" className="hover:text-foreground">
+              Privacy
+            </Link>
+            <Link to="/acceptable-use" className="hover:text-foreground">
+              Acceptable use
+            </Link>
+            <Link to="/compliance" className="hover:text-foreground">
+              Compliance
+            </Link>
+          </div>
+        </main>
       </div>
     </div>
   );
